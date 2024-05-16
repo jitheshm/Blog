@@ -1,0 +1,80 @@
+import React from 'react'
+
+function Navbar() {
+    return (
+        <div className="navbar-area">
+            {/* topbar end*/}
+
+            {/* topbar end*/}
+            {/* adbar end*/}
+            <div className="adbar-area  d-none d-lg-block" style={{ backgroundColor: '#bf0e0e' }}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xl-6 col-lg-5 align-self-center">
+                            <div className="logo text-md-left text-center" style={{ color: '#fff' }}>
+                                <h2>BLOG SPOT</h2>
+                                {/* <a className="main-logo" href="index.html"><img src="assets/img/logo.png" alt="img" /></a> */}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {/* adbar end*/}
+            {/* navbar start */}
+            <nav className="navbar navbar-expand-lg">
+                <div className="container nav-container">
+                    <div className="responsive-mobile-menu">
+                        <div className="logo d-lg-none d-block" style={{ color: '#fff' }}>
+                            <h2>BLOG SPOT</h2>
+                            {/* <a className="main-logo" href="index.html"><img src="assets/img/logo.png" alt="img" /></a> */}
+                        </div>
+                        <button className="menu toggle-btn d-block d-lg-none" data-target="#nextpage_main_menu" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="icon-left" />
+                            <span className="icon-right" />
+                        </button>
+                    </div>
+                    <div className="nav-right-part nav-right-part-mobile">
+                        <a className="search header-search" href="#"><i className="fa fa-search" /></a>
+                    </div>
+                    <div className="collapse navbar-collapse" id="nextpage_main_menu">
+                        <ul className="navbar-nav menu-open">
+                            <li className="current-menu-item">
+                                <a href="#banner">Home</a>
+                            </li>
+                            <li className="current-menu-item">
+                                <a href="#trending">Trending Blogs</a>
+                            </li>
+                            <li className="current-menu-item">
+                                <a href="#latest">Latest Blogs</a>
+                            </li>
+                            <li className="">
+                                <div className="dropdown show">
+                                    <a className="btndropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{color:'#fff'}}>
+                                       Account
+                                    </a>
+                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a className="dropdown-item" href="#" style={{color:'black'}}>Log In</a>
+                                        <a className="dropdown-item" href="#">Write New Blog</a>
+                                        <a className="dropdown-item" href="#">My Blogs</a>
+                                    </div>
+                                </div>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div className="nav-right-part nav-right-part-desktop">
+                        <div className="menu-search-inner">
+                            <input type="text" placeholder="Search For" />
+                            <button type="submit" className="submit-btn"><i className="fa fa-search" /></button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+    )
+}
+
+export default Navbar
