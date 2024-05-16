@@ -3,10 +3,6 @@ import React from 'react'
 function Navbar() {
     return (
         <div className="navbar-area">
-            {/* topbar end*/}
-
-            {/* topbar end*/}
-            {/* adbar end*/}
             <div className="adbar-area  d-none d-lg-block" style={{ backgroundColor: '#bf0e0e' }}>
                 <div className="container">
                     <div className="row">

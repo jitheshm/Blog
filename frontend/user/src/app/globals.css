@@ -81,6 +81,7 @@ html {
 
 body {
   margin: 0;
+
   font-family: var(--body-font);
   line-height: var(--line-height30);
   font-size: var(--body-font-size);
