@@ -1,16 +1,20 @@
 import mongoose from 'mongoose'
 
-interface userDoc{
-    name:string;
-    email:string;
-    password:string;
-    dateOfJoin:Date;
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+
+}
+
+interface userDoc extends IUser, mongoose.Document {
+  dateOfJoin: Date;
 }
 
 const UserSchema = new mongoose.Schema({
-  name:{type:String,require:true},
-  email:{type:String,require:true},
-  password:{type:String,require:true},
+  name: { type: String, require: true },
+  email: { type: String, require: true },
+  password: { type: String, require: true },
   dateOfJoin: { type: Date, required: true, default: Date.now },
 });
 
