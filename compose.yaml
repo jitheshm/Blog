@@ -59,7 +59,7 @@ services:
     env_file:
       - ./frontend/user/.env
     ports:
-      - 3001:3000
+      - 2000:3000
     networks: 
       - blog-network
     develop:
@@ -76,15 +76,15 @@ services:
       - userauthservice
 
   nginx:
-    build: ./gateway
+    build: ./backend/gateway
     container_name: nginx
     ports:
-      - 80:80
+      - 8000:80
     networks:
       - blog-network
     depends_on:
       - userauthservice
-      - user-frontend
+
 
 
 
