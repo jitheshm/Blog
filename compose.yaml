@@ -30,7 +30,7 @@ services:
       - mongo
 
 
-  backend:
+  userauthservice:
     build: ./backend/services/userAuthService
     container_name: user-auth-service
     restart: unless-stopped
@@ -51,6 +51,41 @@ services:
           path: ./backend/services/userAuthService/package.json
     depends_on:
       - mongo
+
+  user-frontend:
+    build: ./frontend/user
+    container_name: user-frontend
+    restart: unless-stopped
+    env_file:
+      - ./frontend/user/.env
+    ports:
+      - 3001:3000
+    networks: 
+      - blog-network
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/user
+          target: /app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./frontend/user/package.json
+    depends_on:
+      - mongo
+      - userauthservice
+
+  nginx:
+    build: ./gateway
+    container_name: nginx
+    ports:
+      - 80:80
+    networks:
+      - blog-network
+    depends_on:
+      - userauthservice
+      - user-frontend
+
 
 
 volumes:
