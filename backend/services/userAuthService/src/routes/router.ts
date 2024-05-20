@@ -3,8 +3,8 @@ import signupController from "../controllers/signupController";
 import signinController from "../controllers/signinController";
 const router = Router();
 
-router.post('/signup',signupController)
-router.post('/signin',signinController)
+router.post('/api/user/signup',signupController)
+router.post('/api/user/signin',signinController)
 
 
 export default router
