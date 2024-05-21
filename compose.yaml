@@ -52,6 +52,29 @@ services:
     depends_on:
       - mongo
 
+  postservice:
+    build: ./backend/services/postService
+    container_name: post-service
+    restart: unless-stopped
+    env_file:
+      - ./backend/services/postService/.env
+    ports:
+      - 3001:3001
+    networks: 
+      - blog-network
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/services/postService
+          target: /app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./backend/services/postService/package.json
+    depends_on:
+      - mongo
+
+
   user-frontend:
     build: ./frontend/user
     container_name: user-frontend
@@ -84,6 +107,7 @@ services:
       - blog-network
     depends_on:
       - userauthservice
+      - postservice
 
 
 
