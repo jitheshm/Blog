@@ -3,7 +3,7 @@ import instance from '@/axios'
 import { verify } from '@/features/user/userSlice'
 import { AxiosResponse } from 'axios'
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import Link from 'next/link'
 
@@ -17,6 +17,7 @@ type verifyResponse = {
 
 function Navbar() {
     const dispatch = useDispatch()
+    const { verified, name } = useSelector((state) => state.user)
     useEffect(() => {
         if (Cookies.get('token')) {
             instance.get('/api/user/token/verify', {
@@ -79,12 +80,20 @@ function Navbar() {
                             <li className="">
                                 <div className="dropdown show">
                                     <a className="btndropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ color: '#fff' }}>
-                                        Account
+                                        {verified ? name : 'Account'}
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <Link className="dropdown-item" href="/signin" style={{ color: 'black' }}>Log In</Link>
-                                        <a className="dropdown-item" href="#">Write New Blog</a>
-                                        <a className="dropdown-item" href="#">My Blogs</a>
+
+                                        {
+                                            verified &&
+                                            <>
+                                                <a className="dropdown-item" href="#">Write New Blog</a>
+                                                <a className="dropdown-item" href="#">My Blogs</a>
+                                            </>
+                                        }
+                                        {
+                                            !verified ? <Link className="dropdown-item" href="/signin" style={{ color: 'black' }}>Log In</Link> : <a className="dropdown-item" href="#">Logout</a>
+                                        }
                                     </div>
                                 </div>
 
