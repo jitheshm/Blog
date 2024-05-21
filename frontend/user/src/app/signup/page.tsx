@@ -1,6 +1,7 @@
+"use client"
 import Signup from '@/components/Signup/Signup'
 import { useRouter } from 'next/navigation';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import instance from '../../axios'
 import Cookies from 'js-cookie';

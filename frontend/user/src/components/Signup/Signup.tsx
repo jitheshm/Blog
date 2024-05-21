@@ -1,10 +1,9 @@
 "use client"
-
 import instance from "@/axios"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { z } from "zod"   
+import { z } from "zod"
 
 // Define the schema using Zod
 const signupSchema = z.object({
@@ -18,8 +17,8 @@ function Signup() {
     const [fullName, setFullName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [errors, setErrors] = useState<{ fullName?: string, email?: string, password?: string }>({})
-    const router=useRouter()
+    const [errors, setErrors] = useState<{ fullName?: string, email?: string, password?: string,exist?:string }>({})
+    const router = useRouter()
 
     const handleSubmit = () => {
 
@@ -32,17 +31,21 @@ function Signup() {
                 email: fieldErrors.email?.[0],
                 password: fieldErrors.password?.[0],
             })
-            return
+            return   
         }
-   
+
 
         setErrors({})
-        instance.post('/api/user/signup', { name:fullName, email, password }).then((res) => {
-            if(res.data.success){
-                router.push('/')
+        instance.post('/api/user/signup', { name: fullName, email, password }).then((res) => {
+            if (res.data.success) {
+                router.push('/signin')
+            } else {
+                setErrors({
+                    exist: res.data.message
+                })
             }
         })
-    } 
+    }
 
     return (
         <div className="" style={{ backgroundColor: "rgb(229 229 229 / 41%)" }}>
@@ -55,6 +58,7 @@ function Signup() {
                                     <div className="mb-md-5 mt-md-4 pb-2">
                                         <h2 className="fw-bold mb-2 text-uppercase">Signup</h2>
                                         <p className="text-white-50 mb-3">Please enter your Details</p>
+                                        {errors.exist && <div className="text-danger">{errors.exist}</div>}
                                         <div data-mdb-input-init className="form-outline form-white mb-2">
                                             <label className="form-label" htmlFor="">Full Name</label>
                                             <input type="text" id="" className="form-control form-control-lg" value={fullName} onChange={(e) => { setFullName(e.target.value) }} />
