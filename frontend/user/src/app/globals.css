@@ -267,6 +267,11 @@ code {
   color: var(--main-color);
 }
 
+.post-btn{
+  height: 31px !important;
+  /* padding: 0px!important; */
+}
+
 .site-main .comment-navigation,
 .site-main .posts-navigation,
 .site-main .post-navigation {
