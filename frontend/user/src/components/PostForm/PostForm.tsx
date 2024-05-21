@@ -20,6 +20,7 @@ function PostForm() {
 
     const handleEditorChange = (content) => {
         setEditorContent(content);
+
     };
 
     const handleImageInsert = () => {
@@ -28,6 +29,14 @@ function PostForm() {
         setEditorContent(newContent);
         //onContentChange(newContent); // Update the parent component with the new content
     };
+
+    const onSubmit = () => {
+        let splitRes = editorContent.split('<img src="')[1]
+        const imgUrl = splitRes.split('" alt="Inserted Image"')[0]
+        console.log(imgUrl);
+        
+        
+    }
 
 
     return (
@@ -44,6 +53,11 @@ function PostForm() {
                                         <div className=" mt-md-4 pb-1">
                                             <div className='text-center'>
                                                 <h4><b>Create a New Post</b></h4>
+                                            </div>
+                                            <div data-mdb-input-init className="form-outline form-white mb-2">
+                                                <label className="form-label" htmlFor="text">Title</label>
+                                                <input type="text" id="text" className="form-control form-control-lg" />
+
                                             </div>
 
                                             <div data-mdb-input-init className="form-outline form-white mb-2">
@@ -64,13 +78,13 @@ function PostForm() {
                                                     />
 
 
-                                                </div>   
+                                                </div>
                                                 <input type="text" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="Enter image URL here..." />
                                                 <button className='btn btn-success post-btn mx-2 btn-sm' onClick={handleImageInsert}>  Insert Image </button>
 
-                                            </div>   
+                                            </div>
                                             <div>
-                                                <button className='btn btn-dark btn-sm post-btn'> Submit </button>    
+                                                <button className='btn btn-dark btn-sm post-btn' onClick={onSubmit}> Submit </button>
                                             </div>
 
                                         </div>
