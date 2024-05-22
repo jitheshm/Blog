@@ -93,6 +93,29 @@ services:
       - mongo
       - rabbitmq
 
+  commentservice:
+    build: ./backend/services/commentService
+    container_name: comment-service
+    restart: unless-stopped
+    env_file:
+      - ./backend/services/commentService/.env
+    ports:
+      - 3002:3002
+    networks: 
+      - blog-network
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/services/commentService
+          target: /app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./backend/services/commentService/package.json
+    depends_on:
+      - mongo
+      - rabbitmq
+
 
   user-frontend:
     build: ./frontend/user
@@ -127,6 +150,7 @@ services:
     depends_on:
       - userauthservice
       - postservice
+      - commentservice
 
 
 
