@@ -4,7 +4,7 @@ import Comment, { IComment } from "../models/CommentModel"
 
 export default async (req: Request, res: Response) => {
     try {
-        let postId = req.params.id
+        let postId = req.params.postId
         let userId = (req as IRequest).user.userId
         let comment = new Comment({
             userId,

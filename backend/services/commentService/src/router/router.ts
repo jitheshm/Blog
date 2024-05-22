@@ -4,7 +4,7 @@ import addCommentController from "../controllers/addCommentController";
 
 const router = Router();
 
-router.post('/api/comments/postId/:id', authentication, addCommentController)
+router.post('/api/comments/posts/:postId', authentication, addCommentController)
 
 
 export default router
