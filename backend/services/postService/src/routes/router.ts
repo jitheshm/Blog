@@ -6,6 +6,7 @@ import updatePostController from "../controllers/updatePostController";
 import deletePostController from "../controllers/deletePostController";
 import getAllPostController from "../controllers/getAllPostController";
 import getSpecificPostController from "../controllers/getSpecificPostController";
+import getUserAllPostController from "../controllers/getUserAllPostController";
 
 
 const router = Router();
@@ -16,6 +17,7 @@ router.patch('/api/posts/:id', authentication, updatePostController)
 router.delete('/api/posts/:id', authentication, deletePostController)
 router.get('/api/posts/', getAllPostController)
 router.get('/api/posts/:id', getSpecificPostController)
+router.get('/api/posts/users/:userId',authentication, getUserAllPostController)
 
 
 
