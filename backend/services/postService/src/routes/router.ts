@@ -5,7 +5,8 @@ import createController from "../controllers/createController";
 
 const router = Router();
 
-router.post('/api/post/create',authentication,createController)
+router.post('/api/posts',authentication,createController)
+
 
 
 
