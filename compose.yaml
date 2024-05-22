@@ -29,6 +29,15 @@ services:
     depends_on:
       - mongo
 
+  rabbitmq:
+    image: "rabbitmq:latest"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
 
   userauthservice:
     build: ./backend/services/userAuthService
@@ -51,6 +60,7 @@ services:
           path: ./backend/services/userAuthService/package.json
     depends_on:
       - mongo
+      - rabbitmq
 
   postservice:
     build: ./backend/services/postService
@@ -73,6 +83,7 @@ services:
           path: ./backend/services/postService/package.json
     depends_on:
       - mongo
+      - rabbitmq
 
 
   user-frontend:
