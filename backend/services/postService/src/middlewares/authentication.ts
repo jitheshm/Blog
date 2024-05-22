@@ -17,47 +17,58 @@ export interface IRequest extends Request {
 }
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-    
-    const token = req.headers['authorization']
-    if (!token) {
-        res.status(401).json({ message: 'Unauthorize', success: false })
-        return
-    }
-    var correlationId = uuidv4()
 
-    //here create new consumer for each request to listen for the response , we can create single consumer for consume all request is more efficient
+    try {
+        const token = req.headers['authorization']
+        if (!token) {
+            res.status(401).json({ message: 'Unauthorize', success: false })
+            return
+        }
+        var correlationId = uuidv4()
 
-    const consumer = await channel.consume(replyQueue, (msg) => {
-        console.log('consume')
+        //here create new consumer for each request to listen for the response , we can create single consumer for consume all request is more efficient
 
-        if (msg?.properties.correlationId == correlationId) {
-            console.log(' [.] Got %s', msg?.content.toString());
-            let decodedData: Iuser = JSON.parse(msg?.content.toString())
-            console.log(decodedData);
+        const consumer = await channel.consume(replyQueue, (msg) => {
+            console.log('consume')
 
-            if (decodedData) {
-                (req as IRequest).user  = decodedData
-                console.log(decodedData.name);
+            if (msg?.properties.correlationId == correlationId) {
+                console.log(' [.] Got %s', msg?.content.toString());
+                if (!msg?.content.toString()) {
+                    console.log("no content");
+                    res.status(401).json({ message: 'Unauthorize', success: false })
+                    return
+                }
+                let decodedData: Iuser = JSON.parse(msg?.content.toString())
+                console.log(decodedData);
 
-                channel.cancel(consumer.consumerTag)
-                next()
-            } else {
-                channel.cancel(consumer.consumerTag)
-                res.status(401).json({ message: 'Unauthorize', success: false })
+                if (decodedData) {
+                    (req as IRequest).user = decodedData
+                    console.log(decodedData.name);
+
+                    channel.cancel(consumer.consumerTag)
+                    next()
+                } else {
+                    channel.cancel(consumer.consumerTag)
+                    res.status(401).json({ message: 'Unauthorize', success: false })
+
+                }
+
 
             }
+        },
+            {
+                noAck: true
+            })
 
+        channel.sendToQueue('auth', Buffer.from(token), {
+            correlationId: correlationId,
+            replyTo: replyQueue
+        });
 
-        }
-    },
-        {
-            noAck: true
-        })
-
-    channel.sendToQueue('auth', Buffer.from(token), {
-        correlationId: correlationId,
-        replyTo: replyQueue
-    });
-
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error', success: false })
+        
+    }
 
 }
