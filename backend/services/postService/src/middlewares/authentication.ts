@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { channel, replyQueue } from "../config/connectRabbitMQ";
 import { v4 as uuidv4 } from 'uuid';
 
-interface IRequest extends Request {
-    user?: any; // Adjust the type according to what you expect user to be
-}
+
 
 interface Iuser {
     userId: string,
@@ -14,7 +12,12 @@ interface Iuser {
     exp: number
 }
 
-export default async (req: IRequest, res: Response, next: NextFunction) => {
+export interface IRequest extends Request {
+    user: Iuser;
+}
+
+export default async (req: Request, res: Response, next: NextFunction) => {
+    
     const token = req.headers['authorization']
     if (!token) {
         res.status(401).json({ message: 'Unauthorize', success: false })
@@ -29,11 +32,11 @@ export default async (req: IRequest, res: Response, next: NextFunction) => {
 
         if (msg?.properties.correlationId == correlationId) {
             console.log(' [.] Got %s', msg?.content.toString());
-            let decodedData:Iuser = JSON.parse(msg?.content.toString())
+            let decodedData: Iuser = JSON.parse(msg?.content.toString())
             console.log(decodedData);
 
             if (decodedData) {
-                req.user = decodedData
+                (req as IRequest).user  = decodedData
                 console.log(decodedData.name);
 
                 channel.cancel(consumer.consumerTag)
