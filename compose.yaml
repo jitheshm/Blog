@@ -31,13 +31,21 @@ services:
 
   rabbitmq:
     image: "rabbitmq:latest"
+    container_name: rabbitmq
+    restart: unless-stopped
     ports:
       - "5672:5672"
       - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_PASS: password
-
+    # environment:
+    #   RABBITMQ_DEFAULT_USER: user
+    #   RABBITMQ_DEFAULT_PASS: password
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    networks:
+      - blog-network
 
   userauthservice:
     build: ./backend/services/userAuthService
