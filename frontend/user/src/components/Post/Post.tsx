@@ -3,6 +3,7 @@ import instance from '@/axios'
 import { AxiosResponse } from 'axios'
 import React, { useEffect, useState } from 'react'
 import Banner from '../Banner/Banner'
+import Link from 'next/link'
 export type PostResponse = {
     success: boolean
     data: {
@@ -16,7 +17,7 @@ export type PostResponse = {
 
 }
 function Post() {
-
+ 
 
     const [posts, setPosts] = useState<PostResponse['data']>([])
     useEffect(() => {
@@ -45,7 +46,7 @@ function Post() {
                                                 <a className="tag-base tag-blue" href="#">{postObj.tag}</a>
                                             </div>
                                             <div className="details">
-                                                <h6 className="title"><a href="#">{postObj.title}</a></h6>
+                                                <h6 className="title"><Link href={`/post/${postObj._id}`}>{postObj.title}</Link></h6>
                                                 <div className="post-meta-single mt-3">
                                                     <ul>
                                                         <li><i className="fa fa-clock-o" />{postObj.dateOfPost}</li>

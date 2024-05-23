@@ -1,5 +1,6 @@
 import React from 'react'
 import { PostResponse } from '../Post/Post'
+import Link from 'next/link'
 function Banner({ post }: { post: PostResponse['data'][0] }) {
 
     return (
@@ -21,7 +22,7 @@ function Banner({ post }: { post: PostResponse['data'][0] }) {
                             </div>
                             <h2>{post?.title}</h2>
                             {/* <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p> */}
-                            <a className="btn btn-blue" href="#">Read</a>
+                            <Link className="btn btn-blue" href={`/post/${post?._id}`}>Read</Link>
                         </div>
                     </div>
                 </div>
