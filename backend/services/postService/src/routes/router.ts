@@ -17,7 +17,7 @@ router.patch('/api/posts/:id', authentication, updatePostController)
 router.delete('/api/posts/:id', authentication, deletePostController)
 router.get('/api/posts/', getAllPostController)
 router.get('/api/posts/:id', getSpecificPostController)
-router.get('/api/posts/users/:userId',authentication, getUserAllPostController)
+router.get('/api/posts/users/user',authentication, getUserAllPostController)
 
 
 
