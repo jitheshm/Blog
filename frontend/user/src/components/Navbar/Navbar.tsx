@@ -20,7 +20,7 @@ function Navbar() {
     const { verified, name } = useSelector((state) => state.user)
     useEffect(() => {
         if (Cookies.get('token')) {
-            instance.get('/api/user/token/verify', {
+            instance.get('/api/users/token/verify', {
                 headers: {
                     Authorization: Cookies.get('token')
                 }

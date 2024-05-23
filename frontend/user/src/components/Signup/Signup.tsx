@@ -36,7 +36,7 @@ function Signup() {
 
 
         setErrors({})
-        instance.post('/api/user/signup', { name: fullName, email, password }).then((res) => {
+        instance.post('/api/users/signup', { name: fullName, email, password }).then((res) => {
             if (res.data.success) {
                 router.push('/signin')
             } else {

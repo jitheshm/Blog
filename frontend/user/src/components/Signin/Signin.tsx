@@ -49,7 +49,7 @@ function Signin() {
 
 
         setErrors({})
-        instance.post('/api/user/signin', { email, password }).then((res: AxiosResponse<signinResponse>) => {
+        instance.post('/api/users/signin', { email, password }).then((res: AxiosResponse<signinResponse>) => {
             if (res.data.success) {
                 Cookies.set('token', res.data.token, { expires: 365 })
                 console.log(res.data.name);
