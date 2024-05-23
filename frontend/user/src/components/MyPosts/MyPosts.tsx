@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import { PostResponse } from '../Post/Post';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 function MyPosts() {
     const [posts, setPosts] = useState<PostResponse['data']>([])
-    const router=useRouter()
+    const router = useRouter()
     useEffect(() => {
         instance.get('api/posts/users/user', {
             headers: {
@@ -39,7 +40,7 @@ function MyPosts() {
                                             <a className="tag-base tag-blue" href="#">Tech</a>
                                         </div>
                                         <div className="details">
-                                            <h6 className="title"><a href="#">{postObj.title}</a></h6>
+                                            <h6 className="title"><Link href={`/post/${postObj._id}`}>{postObj.title}</Link></h6>
                                             <div className="post-meta-single mt-3">
                                                 <ul>
                                                     <li><i className="fa fa-clock-o" />{postObj.dateOfPost}</li>

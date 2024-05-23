@@ -72,7 +72,7 @@ function Navbar() {
                     <div className="collapse navbar-collapse" id="nextpage_main_menu">
                         <ul className="navbar-nav menu-open">
                             <li className="current-menu-item">
-                                <a href="#banner">Home</a>
+                                <Link href="/">Home</Link>
                             </li>
                             <li className="current-menu-item">
                                 <a href="#trending">Trending Blogs</a>
@@ -91,7 +91,7 @@ function Navbar() {
                                             verified &&
                                             <>
                                                 <Link className="dropdown-item" href={'/post/create'}>Write New Blog</Link>
-                                                <a className="dropdown-item" href="#">My Blogs</a>
+                                                <Link className="dropdown-item" href="/myblogs">My Blogs</Link>
                                             </>
                                         }
                                         {
