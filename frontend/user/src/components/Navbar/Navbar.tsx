@@ -1,8 +1,8 @@
 "use client"
 import instance from '@/axios'
-import { verify } from '@/features/user/userSlice'
+import { logout, verify } from '@/features/user/userSlice'
 import { AxiosResponse } from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'js-cookie';
 import Link from 'next/link'
@@ -19,20 +19,23 @@ function Navbar() {
     const dispatch = useDispatch()
     const { verified, name } = useSelector((state) => state.user)
     useEffect(() => {
-        if (Cookies.get('token')) {
-            instance.get('/api/users/token/verify', {
-                headers: {
-                    Authorization: Cookies.get('token')
-                }
-            }).then((res: AxiosResponse<verifyResponse>) => {
-                if (res.data.success) {
-                    dispatch(verify({ name: res.data.data.name }))
-                }
-            }).catch((err) => {
-                Cookies.remove('token')
-            })
+        if (!verified) {
+            if (Cookies.get('token')) {
+                instance.get('/api/users/token/verify', {
+                    headers: {
+                        Authorization: Cookies.get('token')
+                    }
+                }).then((res: AxiosResponse<verifyResponse>) => {
+                    if (res.data.success) {
+                        dispatch(verify({ name: res.data.data.name }))
+                    }
+                }).catch((err) => {
+                    dispatch(logout())
+                    Cookies.remove('token')
+                })
+            }
         }
-    }, [])
+    }, [verified])
 
     return (
         <div className="navbar-area">
@@ -87,7 +90,7 @@ function Navbar() {
                                         {
                                             verified &&
                                             <>
-                                                <a className="dropdown-item" href="#">Write New Blog</a>
+                                                <Link className="dropdown-item" href={'/post/create'}>Write New Blog</Link>
                                                 <a className="dropdown-item" href="#">My Blogs</a>
                                             </>
                                         }

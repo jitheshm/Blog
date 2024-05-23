@@ -1,9 +1,18 @@
+
+import Auth from '@/components/Auth/Auth'
 import PostForm from '@/components/PostForm/PostForm'
-import React from 'react'
+
 
 function page() {
+
+
     return (
-        <PostForm/>
+        <>
+            <Auth>
+                <PostForm />
+            </Auth>
+
+        </>
     )
 }
 

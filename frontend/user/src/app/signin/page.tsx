@@ -14,7 +14,7 @@ function page() {
    const dispatch = useDispatch()
    const router = useRouter();
    useEffect(() => {
-      instance.get('/api/user/token/verify', {
+      instance.get('/api/users/token/verify', {
          headers: {
             Authorization: Cookies.get('token')
          }
