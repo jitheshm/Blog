@@ -1,6 +1,8 @@
 
 import amqp from 'amqplib'
 import authService from '../services/authService';
+import authConsumer from '../consumers/authConsumer';
+import emailConsumer from '../consumers/emailConsumer';
 const connectString = process.env.RABBITMQ_URL || 'amqp://rabbitmq:5672';
 
 export let channel: amqp.Channel;
@@ -12,35 +14,11 @@ export default async () => {
 
             connection = await amqp.connect(connectString);
             channel = await connection.createChannel()
-            let q = await channel.assertQueue('auth', { durable: false })
+           
             channel.prefetch(1);
 
-            channel.consume('auth', (msg) => {
-                console.log(msg); 
-                
-                let token = msg?.content.toString()
-                if (token) {
-
-                    const decode = authService(token)
-                    console.log(decode);
-                    
-                    if (decode) {
-                        channel.sendToQueue(msg?.properties.replyTo, Buffer.from(JSON.stringify(decode)), {
-                            correlationId: msg?.properties.correlationId
-                        });
-                    } else {
-                        channel.sendToQueue(msg?.properties.replyTo, Buffer.from(''), {
-                            correlationId: msg?.properties.correlationId
-                        });
-
-                    }
-
-                }
-                channel.ack(msg as amqp.Message);
-
-            },{
-                noAck: false
-              })
+            authConsumer()
+            emailConsumer()
 
             console.log("RabbitMQ connected");
             break;

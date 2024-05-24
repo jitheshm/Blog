@@ -38,7 +38,7 @@ export default async () => {
                         const msgObj: { emails: string[] } = JSON.parse(msg?.content.toString())
                         notification(msgObj.emails, postId as string)
                         channel.cancel(consumer.consumerTag)
-                        
+
 
 
                     }
@@ -48,7 +48,7 @@ export default async () => {
                     })
 
 
-                channel.sendToQueue('userList', Buffer.from('fetch users email'), {
+                channel.sendToQueue('email', Buffer.from('fetch users email'), {
                     correlationId: correlationId,
                     replyTo: replyQueue
                 });

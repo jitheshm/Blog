@@ -6,7 +6,8 @@ const mailerConfig = {
 }
 const frontendUrl=process.env.FRONTEND_URL
 export default (emails: string[], postId: string) => {
-
+    console.log(emails);
+    
     const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
