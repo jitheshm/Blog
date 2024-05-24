@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Post, { IPost } from "../models/PostModel";
 import { IRequest } from "../middlewares/authentication";
+import { channel } from "../config/connectRabbitMQ";
 
 export default async (req: Request, res: Response) => {
     try {
@@ -16,6 +17,10 @@ export default async (req: Request, res: Response) => {
         });
 
         await post.save()
+        let msg:string=post._id as string
+        channel.publish('notification', 'blog', Buffer.from(msg));
+        console.log("post id sent to notification service");
+        
         res.status(200).json({ message: 'Post created', success: true })
 
     } catch (error) {
