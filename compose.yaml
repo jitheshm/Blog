@@ -3,6 +3,7 @@ version: "3.8"
 services:
   mongo:
     image: mongo
+    container_name: blog-mongo
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -31,7 +32,7 @@ services:
 
   rabbitmq:
     image: "rabbitmq:latest"
-    container_name: rabbitmq
+    container_name: blog-rabbitmq
     restart: unless-stopped
     ports:
       - "5672:5672"
@@ -49,7 +50,8 @@ services:
 
   userauthservice:
     build: ./backend/services/userAuthService
-    container_name: user-auth-service
+    container_name: blog-user-auth-service
+    image: jitheshmjithooz/blog-user-auth-service
     restart: unless-stopped
     env_file:
       - ./backend/services/userAuthService/.env
@@ -72,7 +74,8 @@ services:
 
   postservice:
     build: ./backend/services/postService
-    container_name: post-service
+    container_name: blog-post-service
+    image: jitheshmjithooz/blog-post-service
     restart: unless-stopped
     env_file:
       - ./backend/services/postService/.env
@@ -95,7 +98,8 @@ services:
 
   commentservice:
     build: ./backend/services/commentService
-    container_name: comment-service
+    container_name: blog-comment-service
+    image: jitheshmjithooz/blog-comment-service
     restart: unless-stopped
     env_file:
       - ./backend/services/commentService/.env
@@ -118,7 +122,8 @@ services:
 
   notificationservice:
     build: ./backend/services/notificationService
-    container_name: notification-service
+    container_name: blog-notification-service
+    image: jitheshmjithooz/blog-notification-service
     restart: unless-stopped
     env_file:
       - ./backend/services/notificationService/.env
@@ -142,7 +147,8 @@ services:
 
   user-frontend:
     build: ./frontend/user
-    container_name: user-frontend
+    container_name: blog-user-frontend
+    image: jitheshmjithooz/blog-user-frontend
     restart: unless-stopped
     env_file:
       - ./frontend/user/.env
@@ -165,7 +171,8 @@ services:
 
   nginx:
     build: ./backend/gateway
-    container_name: nginx
+    container_name: blog-nginx
+    image: jitheshmjithooz/blog-gateway
     ports:
       - 8000:80
     networks:
