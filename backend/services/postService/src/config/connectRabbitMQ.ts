@@ -15,7 +15,7 @@ export default async () => {
             channel.assertExchange('notification', 'direct', {
                 durable: false
             });
-            
+            channel.prefetch(1);
             let q = await channel.assertQueue('', { exclusive: true })
             replyQueue = q.queue;
 

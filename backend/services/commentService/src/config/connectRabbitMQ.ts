@@ -12,6 +12,7 @@ export default async () => {
 
             connection = await amqp.connect(connectString);
             channel = await connection.createChannel()
+            channel.prefetch(1);
             let q = await channel.assertQueue('', { exclusive: true })
             replyQueue = q.queue;
 
