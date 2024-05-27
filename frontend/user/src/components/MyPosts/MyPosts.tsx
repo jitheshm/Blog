@@ -24,6 +24,20 @@ function MyPosts() {
         })
     }, [])
 
+    const handleClick = (id: string) => {
+        instance.delete(`api/posts/${id}`,{
+            headers: {
+                Authorization: Cookies.get('token')
+            }
+        }).then((res) => {
+            console.log(res.data);
+            setPosts(posts.filter((post) => post._id !== id))
+        }).catch((err) => {
+            console.log(err);
+        
+        })
+    }
+
     return (
         <div className="banner-area banner-inner-1 mt-5" id="banner">
 
@@ -34,18 +48,33 @@ function MyPosts() {
                         posts.map((postObj, index) => {
                             return (
                                 <div key={postObj._id} className="col-lg-3 col-sm-6">
-                                    <div className="single-post-wrap style-white">
+                                    <div className="single-post-wrap style-white ">
                                         <div className="thumb">
                                             <img src={postObj.thumbnail} alt="img" />
                                             <a className="tag-base tag-blue" href="#">Tech</a>
                                         </div>
-                                        <div className="details">
-                                            <h6 className="title"><Link href={`/post/${postObj._id}`}>{postObj.title}</Link></h6>
-                                            <div className="post-meta-single mt-3">
+                                        <div className="details row">
+                                            <h6 className="title col-10"><Link href={`/post/${postObj._id}`}>{postObj.title}</Link></h6>
+                                            <div className='col-1'>
+                                                {/* <i className="fa-solid fa-ellipsis"></i> */}
+                                                <div className="">
+                                                    <button className="btn btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                                        <i className="fa-solid fa-ellipsis" style={{ color: "#000" }} />
+                                                    </button>
+                                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a className="dropdown-item" href="#">Edit</a>
+                                                        <button className="dropdown-item btn" onClick={() => handleClick(postObj._id)}> Delete</button>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            {/* <div className="post-meta-single mt-3">
                                                 <ul>
                                                     <li><i className="fa fa-clock-o" />{postObj.dateOfPost}</li>
                                                 </ul>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </div>
