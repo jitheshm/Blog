@@ -9,7 +9,7 @@ export let channel: amqp.Channel;
 export default async () => {
     let connection: amqp.Connection | null = null;
     let retry = 0;
-    while (retry < 10) {
+    while (true) {
         try {
 
             connection = await amqp.connect(connectString);
