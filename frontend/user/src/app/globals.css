@@ -1820,10 +1820,11 @@ ul {
   right: 0 !important;
   transition: all 0.4s;
   padding: 0;
+  position: fixed;
 }
 
 .navbar-area .navbar {
-  background: #cf1313
+  background: #a10909
 }
 
 .navbar-area .nav-container {
@@ -2084,7 +2085,7 @@ ul {
 
 /********** navbar right part **********/
 .menu-search-inner {
-  background: #d91616
+  background: #890505
 }
 
 .menu-search-inner input {
