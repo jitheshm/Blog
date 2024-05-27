@@ -62,7 +62,7 @@ function MyPosts() {
                                                         <i className="fa-solid fa-ellipsis" style={{ color: "#000" }} />
                                                     </button>
                                                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <a className="dropdown-item" href="#">Edit</a>
+                                                        {/* <a className="dropdown-item" href="#">Edit</a> */}
                                                         <button className="dropdown-item btn" onClick={() => handleClick(postObj._id)}> Delete</button>
 
                                                     </div>
